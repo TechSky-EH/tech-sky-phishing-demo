@@ -69,17 +69,27 @@ class FormHandler {
         document.getElementById(formId).classList.add('active');
     }
 
-    initFormSubmission() {
-        // Login form submission
-        this.loginForm.submitBtn.addEventListener('click', () => {
-            this.handleLogin();
-        });
+// In your form-validation.js file
+initFormSubmission() {
+    // Get the form elements
+    const loginForm = document.querySelector('#loginForm form');
+    const signupForm = document.querySelector('#signupForm form');
+    
+    // Login form submission
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent actual form submission
+        this.handleLogin();
+    });
 
-        // Signup form submission
-        this.signupForm.submitBtn.addEventListener('click', () => {
-            this.handleSignup();
-        });
-    }
+    // Signup form submission
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault(); // Prevent actual form submission
+        this.handleSignup();
+    });
+}
+
+// The rest of your form processing code can remain largely the same
+// Just remove the direct fetch() call since SEToolkit will intercept the form data
 
     handleLogin() {
         const username = this.loginForm.username.value;

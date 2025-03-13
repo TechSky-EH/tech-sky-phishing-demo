@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,60 +11,66 @@
     <link rel="stylesheet" href="css/forms.css">
     <link rel="stylesheet" href="css/modal.css">
 </head>
+
 <body>
     <canvas class="matrix-code" id="matrixCanvas"></canvas>
-    
+
     <div class="container">
         <div class="scan-line"></div>
         <div class="status-msg" id="statusMsg"></div>
-        
+
         <div class="logo">
             <div class="logo-icon">⚡</div>
             <h1 class="typing-effect" id="logoText">Tech Sky Lab</h1>
             <p class="subtitle">Ethical Hacking & Cybersecurity</p>
         </div>
-        
+
         <div class="tab-container">
             <div class="tab active" data-form="login">Login</div>
             <div class="tab" data-form="signup">Signup</div>
         </div>
-        
+
+        <!-- Inside your HTML where the login form currently is -->
         <div class="form-content active" id="loginForm">
-            <div class="form-group">
-                <label>Username</label>
-                <div class="input-container">
-                    <span class="input-icon">👤</span>
-                    <input type="text" class="form-control" id="loginUsername" placeholder="Enter your username">
+            <form method="POST" action="">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-container">
+                        <span class="input-icon">👤</span>
+                        <input type="text" class="form-control" id="loginUsername" name="username"
+                            placeholder="Enter your username">
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Password</label>
-                <div class="input-container">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password">
-                    <span class="password-toggle" data-target="loginPassword">👁️</span>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-container">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-control" id="loginPassword" name="password"
+                            placeholder="Enter your password">
+                        <span class="password-toggle" data-target="loginPassword">👁️</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="form-options">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMe">
-                    <label for="rememberMe">Remember me</label>
+
+                <div class="form-options">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
                 </div>
-                <a href="#" class="forgot-password">Forgot password?</a>
-            </div>
-            
-            <button class="btn" id="loginBtn">
-                Login to Secure Lab
-                <span class="loading-spinner" id="loginSpinner"></span>
-            </button>
-            
+
+                <button type="submit" class="btn" id="loginBtn">
+                    Login to Secure Lab
+                    <span class="loading-spinner" id="loginSpinner"></span>
+                </button>
+            </form>
+
             <div class="form-footer">
                 Don't have an account? <a href="#" class="switch-form" data-target="signup">Create one</a>
             </div>
         </div>
-        
+
         <div class="form-content" id="signupForm">
             <div class="form-group">
                 <label>Username</label>
@@ -72,7 +79,7 @@
                     <input type="text" class="form-control" id="signupUsername" placeholder="Choose a username">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label>Email</label>
                 <div class="input-container">
@@ -80,58 +87,60 @@
                     <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email">
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label>Password</label>
                 <div class="input-container">
                     <span class="input-icon">🔒</span>
-                    <input type="password" class="form-control" id="signupPassword" placeholder="Create a strong password">
+                    <input type="password" class="form-control" id="signupPassword"
+                        placeholder="Create a strong password">
                     <span class="password-toggle" data-target="signupPassword">👁️</span>
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label>Confirm Password</label>
                 <div class="input-container">
                     <span class="input-icon">🔒</span>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password">
+                    <input type="password" class="form-control" id="confirmPassword"
+                        placeholder="Confirm your password">
                     <span class="password-toggle" data-target="confirmPassword">👁️</span>
                 </div>
             </div>
-            
+
             <button class="btn" id="signupBtn">
                 Create Secure Account
                 <span class="loading-spinner" id="signupSpinner"></span>
             </button>
-            
+
             <div class="form-footer">
                 Already have an account? <a href="#" class="switch-form" data-target="login">Login</a>
             </div>
         </div>
-        
+
     </div>
 
     <!-- Subscription Modal -->
     <div class="modal-overlay" id="subscriptionModal">
         <div class="modal-container">
             <button class="modal-close" id="modalClose">×</button>
-            
+
             <div class="modal-header">
                 <h3 class="modal-title">Access Granted</h3>
             </div>
-            
+
             <div class="modal-body">
                 <div class="subscription-animation"></div>
                 <p>You've successfully logged into Tech Sky Lab!</p>
                 <p>Enhance your cybersecurity skills by subscribing to our YouTube channel</p>
-                
+
                 <div class="channel-logo">
                     <span style="margin-right: 8px">▶️</span> Tech Sky - Ethical Hacking
                 </div>
-                
+
                 <p>Get access to premium tutorials and cybersecurity insights</p>
             </div>
-            
+
             <div class="modal-footer">
                 <button class="subscribe-btn" id="subscribeBtn">
                     <span>SUBSCRIBE NOW</span>
@@ -141,7 +150,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- JavaScript includes -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="js/matrix.js"></script>
@@ -149,4 +158,5 @@
     <script src="js/modal.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
