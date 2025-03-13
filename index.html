@@ -1,66 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>login page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    #mainLayer {
+      position: relative;
+      width: 700px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #ddd;
+    }
+    
+    #masthead {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+    }
+    
+    #siteName {
+      margin: 0;
+      padding: 0;
+    }
+    
+    #siteInfo {
+      margin: 5px 0;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    #globalNav {
+      margin: 10px 0;
+      padding: 5px 0;
+      border-top: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+    }
+    
+    #content {
+      margin: 20px 0;
+    }
+    
+    .story {
+      margin-bottom: 20px;
+    }
+    
+    h3 {
+      color: #333;
+    }
+    
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    input[type="text"], input[type="password"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+    }
+    
+    input[type="submit"] {
+      padding: 5px 10px;
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <form action="capture.php" method="POST">
-            <input type="text" name="username" placeholder="Enter Username" required>
-            <input type="password" name="password" placeholder="Enter Password" required>
-            <button type="submit">Login</button>
-        </form>
+  <div id="mainLayer">
+    <div id="masthead">
+      <h1 id="siteName"><a href="#">Acunetix website security</a></h1>
+      <h6 id="siteInfo">TEST and Demonstration site for Acunetix Web Vulnerability Scanner</h6>
+      <div id="globalNav">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tbody>
+            <tr>
+              <td align="left">
+                <a href="#">home</a> | <a href="#">categories</a> | <a href="#">artists</a> | 
+                <a href="#">disclaimer</a> | <a href="#">your cart</a> | <a href="#">guestbook</a> | 
+                <a href="#">AJAX Demo</a>
+              </td>
+              <td align="right">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <div id="content">
+      <div class="story">
+        <h3>If you are already registered please enter your login information below:</h3><br>
+        <form name="loginform" method="post" action="">
+          <table cellpadding="4" cellspacing="1">
+            <tbody>
+              <tr>
+                <td>Username : </td>
+                <td><input name="uname" type="text" size="20" style="width:120px;"></td>
+              </tr>
+              <tr>
+                <td>Password : </td>
+                <td><input name="pass" type="password" size="20" style="width:120px;"></td>
+              </tr>
+              <tr>
+                <td colspan="2" align="right"><input type="submit" value="login" style="width:75px;"></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>
+      </div>
+      <div class="story">
+        <h3>
+          You can also <a href="#">signup here</a>.<br>
+          Signup disabled. Please use the username <font color="red">test</font> and the password <font color="red">test</font>.
+        </h3>
+      </div>
+    </div>
+
+    <div id="navBar">
+      <div id="search">
+        <form action="#" method="post">
+          <label>search art</label>
+          <input name="searchFor" type="text" size="10">
+          <input name="goButton" type="submit" value="go">
+        </form>
+      </div>
+      <div id="sectionLinks">
+        <ul>
+          <li><a href="#">Browse categories</a></li>
+          <li><a href="#">Browse artists</a></li>
+          <li><a href="#">Your cart</a></li>
+          <li><a href="#">Signup</a></li>
+          <li><a href="#">Your profile</a></li>
+          <li><a href="#">Our guestbook</a></li>
+          <li><a href="#">AJAX Demo</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="siteInfo">
+      <a href="#">About Us</a> | <a href="#">Privacy Policy</a> | <a href="#">Contact Us</a> | ©2023 Acunetix Ltd
+    </div>
+    <br>
+    <div style="background-color:lightgray;width:100%;text-align:center;font-size:12px;padding:1px">
+      <p style="padding-left:5%;padding-right:5%"><b>Warning</b>: This is not a real shop. This is an example application, which is intentionally vulnerable to web attacks. It is intended to help you test security tools.</p>
+    </div>
+  </div>
 </body>
 </html>
