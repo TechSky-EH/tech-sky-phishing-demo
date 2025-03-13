@@ -1,119 +1,307 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- saved from url=(0036)http://testphp.vulnweb.com/login.php -->
-<html><!-- InstanceBegin template="/Templates/main_dynamic_template.dwt.php" codeOutsideHTMLIsLocked="false" --><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Sky - Ethical Hacking Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
 
+        :root {
+            --neon-green: #39ff14;
+            --dark-blue: #0a1929;
+            --cyber-purple: #9d00ff;
+            --cyber-blue: #0984e3;
+            --error-red: #ff3e3e;
+        }
 
-<!-- InstanceBeginEditable name="document_title_rgn" -->
-<title>login page</title>
-<!-- InstanceEndEditable -->
-<link rel="stylesheet" href="./login page_files/style.css" type="text/css">
-<!-- InstanceBeginEditable name="headers_rgn" -->
-<!-- here goes headers headers -->
-<!-- InstanceEndEditable -->
-<script language="JavaScript" type="text/JavaScript">
-<!--
-function MM_reloadPage(init) {  //reloads the window if Nav4 resized
-  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
-    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
-  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
-}
-MM_reloadPage(true);
-//-->
-</script>
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(10, 25, 41, 0.5) 0%, rgba(10, 25, 41, 0.95) 50%),
+                url('/api/placeholder/1920/1080');
+            background-size: cover;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px 10px;
+        }
 
+        /* Matrix-style raining code background effect */
+        .matrix-code {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            background: rgba(2, 11, 22, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(57, 255, 20, 0.1);
+            overflow: hidden;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--neon-green), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+        
+        .subtitle {
+            color: #8a9bae;
+            font-size: 14px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .subtitle::before, .subtitle::after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 30px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            top: 50%;
+        }
+        
+        .subtitle::before {
+            left: -40px;
+        }
+        
+        .subtitle::after {
+            right: -40px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            color: var(--neon-green);
+            animation: pulse 2s infinite;
+        }
+
+        h3 {
+            color: var(--neon-green);
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .story {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        table td {
+            padding: 8px;
+            color: #8a9bae;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            background-color: rgba(16, 36, 57, 0.5);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+        }
+
+        input[type="submit"] {
+            padding: 8px 16px;
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+        }
+
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #8a9bae;
+            font-size: 14px;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+            opacity: 0.7;
+            animation: scanline 2s linear infinite;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
-<body> 
-<div id="mainLayer" style="position:absolute; width:700px; z-index:1">
-<div id="masthead"> 
-  <h1 id="siteName"><a href="https://www.acunetix.com/"><img src="./login page_files/logo.gif" width="306" height="38" border="0" alt="Acunetix website security"></a></h1>   
-  <h6 id="siteInfo">TEST and Demonstration site for <a href="https://www.acunetix.com/vulnerability-scanner/">Acunetix Web Vulnerability Scanner</a></h6>
-  <div id="globalNav"> 
-      	<table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr>
-	<td align="left">
-		<a href="http://testphp.vulnweb.com/index.php">home</a> | <a href="http://testphp.vulnweb.com/categories.php">categories</a> | <a href="http://testphp.vulnweb.com/artists.php">artists
-		</a> | <a href="http://testphp.vulnweb.com/disclaimer.php">disclaimer</a> | <a href="http://testphp.vulnweb.com/cart.php">your cart</a> | 
-		<a href="http://testphp.vulnweb.com/guestbook.php">guestbook</a> | 
-		<a href="http://testphp.vulnweb.com/AJAX/index.php">AJAX Demo</a>
-	</td>
-	<td align="right">
-		</td>
-	</tr></tbody></table>
-  </div> 
-</div> 
-<!-- end masthead --> 
+<body>
+    <canvas class="matrix-code" id="matrixCanvas"></canvas>
+    
+    <div class="container">
+        <div class="scan-line"></div>
+        
+        <div class="logo">
+            <div class="logo-icon">⚡</div>
+            <h1>Tech Sky Lab</h1>
+            <p class="subtitle">Ethical Hacking & Cybersecurity</p>
+        </div>
+        
+        <div id="content">
+            <div class="story">
+                <h3>If you are already registered please enter your login information below:</h3>
+                <form name="loginform" method="post" action="">
+                    <table cellpadding="4" cellspacing="1">
+                        <tbody>
+                            <tr>
+                                <td>Username : </td>
+                                <td><input name="uname" type="text" size="20"></td>
+                            </tr>
+                            <tr>
+                                <td>Password : </td>
+                                <td><input name="pass" type="password" size="20"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="right"><input type="submit" value="login"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            
+            <div class="form-footer">
+                For demonstration and educational purposes only.
+            </div>
+        </div>
+    </div>
 
-<!-- begin content -->
-<!-- InstanceBeginEditable name="content_rgn" -->
-<div id="content">
-	<div class="story">
-	<h3>If you are already registered please enter your login information below:</h3><br>
-	<form name="loginform" method="post" action="http://testphp.vulnweb.com/userinfo.php">
-	<table cellpadding="4" cellspacing="1">
-		<tbody><tr><td>Username : </td><td><input name="uname" type="text" size="20" style="width:120px;"></td></tr>
-		<tr><td>Password : </td><td><input name="pass" type="password" size="20" style="width:120px;"></td></tr>
-		<tr><td colspan="2" align="right"><input type="submit" value="login" style="width:75px;"></td></tr>
-	</tbody></table>
-	</form>
-  	</div>
-	<div class="story">
-	<h3>
-        You can also <a href="http://testphp.vulnweb.com/signup.php">signup here</a>.<br>
-        Signup disabled. Please use the username <font color="red">test</font> and the password <font color="red">test</font>. 
-    </h3>
-	</div>
-</div>
-<!-- InstanceEndEditable -->
-<!--end content -->
-
-<div id="navBar"> 
-  <div id="search"> 
-    <form action="http://testphp.vulnweb.com/search.php?test=query" method="post"> 
-      <label>search art</label> 
-      <input name="searchFor" type="text" size="10"> 
-      <input name="goButton" type="submit" value="go"> 
-    </form> 
-  </div> 
-  <div id="sectionLinks"> 
-    <ul> 
-      <li><a href="http://testphp.vulnweb.com/categories.php">Browse categories</a></li> 
-      <li><a href="http://testphp.vulnweb.com/artists.php">Browse artists</a></li> 
-      <li><a href="http://testphp.vulnweb.com/cart.php">Your cart</a></li> 
-      <li><a href="http://testphp.vulnweb.com/login.php">Signup</a></li>
-	  <li><a href="http://testphp.vulnweb.com/userinfo.php">Your profile</a></li>
-	  <li><a href="http://testphp.vulnweb.com/guestbook.php">Our guestbook</a></li>
-		<li><a href="http://testphp.vulnweb.com/AJAX/index.php">AJAX Demo</a></li>
-	   
-    </ul> 
-  </div> 
-  <div class="relatedLinks"> 
-    <h3>Links</h3> 
-    <ul> 
-      <li><a href="http://www.acunetix.com/">Security art</a></li> 
-	  <li><a href="https://www.acunetix.com/vulnerability-scanner/php-security-scanner/">PHP scanner</a></li>
-	  <li><a href="https://www.acunetix.com/blog/articles/prevent-sql-injection-vulnerabilities-in-php-applications/">PHP vuln help</a></li>
-	  <li><a href="http://www.eclectasy.com/Fractal-Explorer/index.html">Fractal Explorer</a></li> 
-    </ul> 
-  </div> 
-  <div id="advert"> 
-    <p>
-      <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0" width="107" height="66">
-        <param name="movie" value="Flash/add.swf">
-        <param name="quality" value="high">
-        <embed src="Flash/add.swf" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="107" height="66">
-      </object>
-    </p>
-  </div> 
-</div> 
-
-<!--end navbar --> 
-<div id="siteInfo">  <a href="http://www.acunetix.com/">About Us</a> | <a href="http://testphp.vulnweb.com/privacy.php">Privacy Policy</a> | <a href="mailto:wvs@acunetix.com">Contact Us</a> | ©2019
-  Acunetix Ltd 
-</div> 
-<br> 
-<div style="background-color:lightgray;width:100%;text-align:center;font-size:12px;padding:1px">
-<p style="padding-left:5%;padding-right:5%"><b>Warning</b>: This is not a real shop. This is an example PHP application, which is intentionally vulnerable to web attacks. It is intended to help you test Acunetix. It also helps you understand how developer errors and bad configuration may let someone break into your website. You can use it to test other tools and your manual hacking skills as well. Tip: Look for potential SQL Injections, Cross-site Scripting (XSS), and Cross-site Request Forgery (CSRF), and more.</p>
-</div>
-</div>
-
-
-</body><!-- InstanceEnd --></html>
+    <script>
+        // Matrix code rain effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Character set for the matrix code
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+            const fontSize = 14;
+            const columns = Math.floor(canvas.width / fontSize);
+            
+            // Array to track the Y position of each column
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -100); // Random starting positions above the canvas
+            }
+            
+            // Drawing the matrix rain
+            function drawMatrixRain() {
+                // Semi-transparent black background to create trail effect
+                ctx.fillStyle = 'rgba(10, 25, 41, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Set text color and font
+                ctx.fillStyle = '#39ff14';
+                ctx.font = `${fontSize}px monospace`;
+                
+                // Draw characters
+                for (let i = 0; i < drops.length; i++) {
+                    // Random character
+                    const char = characters[Math.floor(Math.random() * characters.length)];
+                    
+                    // Draw the character
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move the drop down
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            // Animation loop
+            setInterval(drawMatrixRain, 50);
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
+</body>
+</html>
