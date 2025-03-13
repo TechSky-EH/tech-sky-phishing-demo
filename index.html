@@ -1,158 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Sky - Ethical Hacking Lab</title>
-    <!-- CSS includes -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/matrix.css">
-    <link rel="stylesheet" href="css/forms.css">
-    <link rel="stylesheet" href="css/modal.css">
-</head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
 
+        :root {
+            --neon-green: #39ff14;
+            --dark-blue: #0a1929;
+            --cyber-purple: #9d00ff;
+            --cyber-blue: #0984e3;
+            --error-red: #ff3e3e;
+        }
+
+        body {
+            background-color: var(--dark-blue);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(10, 25, 41, 0.5) 0%, rgba(10, 25, 41, 0.95) 50%),
+                url('/api/placeholder/1920/1080');
+            background-size: cover;
+            position: relative;
+            overflow-y: auto;
+            padding: 30px 10px;
+        }
+
+        /* Matrix-style raining code background effect */
+        .matrix-code {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            padding: 30px;
+            background: rgba(2, 11, 22, 0.85);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(57, 255, 20, 0.1);
+            overflow: hidden;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            background: linear-gradient(45deg, var(--neon-green), var(--cyber-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+        
+        .subtitle {
+            color: #8a9bae;
+            font-size: 14px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .subtitle::before, .subtitle::after {
+            content: '';
+            position: absolute;
+            height: 1px;
+            width: 30px;
+            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
+            top: 50%;
+        }
+        
+        .subtitle::before {
+            left: -40px;
+        }
+        
+        .subtitle::after {
+            right: -40px;
+        }
+
+        .logo-icon {
+            font-size: 48px;
+            color: var(--neon-green);
+            animation: pulse 2s infinite;
+        }
+
+        .tab-container {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            color: #8a9bae;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--neon-green);
+            border-bottom: 2px solid var(--neon-green);
+        }
+
+        .tab:hover {
+            color: white;
+        }
+
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #8a9bae;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: var(--neon-green);
+            font-size: 18px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #8a9bae;
+            transition: color 0.3s;
+            user-select: none;
+        }
+
+        .password-toggle:hover {
+            color: var(--neon-green);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            padding-left: 45px;
+            background-color: rgba(16, 36, 57, 0.5);
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--neon-green);
+            box-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+            background-color: rgba(16, 36, 57, 0.8);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
+        }
+
+        .form-footer {
+            margin-top: 25px;
+            text-align: center;
+            color: #8a9bae;
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: var(--neon-green);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .form-footer a:hover {
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.6);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .form-check {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-input {
+            margin-right: 8px;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border: 1px solid rgba(57, 255, 20, 0.3);
+            border-radius: 3px;
+            background-color: rgba(16, 36, 57, 0.5);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--neon-green);
+        }
+
+        .form-check-input:checked::before {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--dark-blue);
+            font-size: 10px;
+        }
+
+        .forgot-password {
+            color: #8a9bae;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--neon-green);
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+            opacity: 0.7;
+            animation: scanline 2s linear infinite;
+        }
+
+        .typing-effect::after {
+            content: '|';
+            animation: blink 1s infinite;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Enhanced responsive design */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 95%;
+                padding: 20px;
+            }
+            
+            .btn, .form-control {
+                padding: 12px;
+            }
+            
+            .logo h1 {
+                font-size: 28px;
+            }
+            
+            .logo-icon {
+                font-size: 42px;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .form-footer {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 100%;
+                padding: 15px;
+                border-radius: 0;
+            }
+            
+            .tab-container {
+                margin-bottom: 20px;
+            }
+            
+            .tab {
+                padding: 10px;
+                font-size: 14px;
+            }
+            
+            .logo h1 {
+                font-size: 24px;
+            }
+            
+            .logo-icon {
+                font-size: 36px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .form-group label {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
 <body>
     <canvas class="matrix-code" id="matrixCanvas"></canvas>
-
+    
     <div class="container">
         <div class="scan-line"></div>
-        <div class="status-msg" id="statusMsg"></div>
-
+        
         <div class="logo">
             <div class="logo-icon">⚡</div>
-            <h1 class="typing-effect" id="logoText">Tech Sky Lab</h1>
+            <h1 id="logoText">Tech Sky Lab</h1>
             <p class="subtitle">Ethical Hacking & Cybersecurity</p>
         </div>
-
+        
         <div class="tab-container">
             <div class="tab active" data-form="login">Login</div>
             <div class="tab" data-form="signup">Signup</div>
         </div>
-
-        <!-- Inside your HTML where the login form currently is -->
+        
         <div class="form-content active" id="loginForm">
-            <form method="POST" action="">
-                <!-- Your existing form fields, but add name attributes -->
+            <!-- Traditional form with direct action submission -->
+            <form method="post" action="login.php">
                 <div class="form-group">
                     <label>Username</label>
                     <div class="input-container">
                         <span class="input-icon">👤</span>
-                        <input type="text" class="form-control" id="loginUsername" name="username"
-                            placeholder="Enter your username">
+                        <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Enter your username">
                     </div>
                 </div>
-
+                
                 <div class="form-group">
                     <label>Password</label>
                     <div class="input-container">
                         <span class="input-icon">🔒</span>
-                        <input type="password" class="form-control" id="loginPassword" name="password"
-                            placeholder="Enter your password">
+                        <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Enter your password">
                         <span class="password-toggle" data-target="loginPassword">👁️</span>
                     </div>
                 </div>
-
-                <!-- Your existing options -->
-
-                <!-- Change to type="submit" -->
+                
+                <div class="form-options">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+                
                 <button type="submit" class="btn" id="loginBtn">
                     Login to Secure Lab
-                    <span class="loading-spinner" id="loginSpinner"></span>
                 </button>
             </form>
-
+            
             <div class="form-footer">
                 Don't have an account? <a href="#" class="switch-form" data-target="signup">Create one</a>
             </div>
         </div>
-
+        
         <div class="form-content" id="signupForm">
-            <div class="form-group">
-                <label>Username</label>
-                <div class="input-container">
-                    <span class="input-icon">👤</span>
-                    <input type="text" class="form-control" id="signupUsername" placeholder="Choose a username">
+            <!-- Traditional form with direct action submission -->
+            <form method="post" action="signup.php">
+                <div class="form-group">
+                    <label>Username</label>
+                    <div class="input-container">
+                        <span class="input-icon">👤</span>
+                        <input type="text" class="form-control" id="signupUsername" name="username" placeholder="Choose a username">
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Email</label>
-                <div class="input-container">
-                    <span class="input-icon">✉️</span>
-                    <input type="email" class="form-control" id="signupEmail" placeholder="Enter your email">
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <div class="input-container">
+                        <span class="input-icon">✉️</span>
+                        <input type="email" class="form-control" id="signupEmail" name="email" placeholder="Enter your email">
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Password</label>
-                <div class="input-container">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" class="form-control" id="signupPassword"
-                        placeholder="Create a strong password">
-                    <span class="password-toggle" data-target="signupPassword">👁️</span>
+                
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-container">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-control" id="signupPassword" name="password" placeholder="Create a strong password">
+                        <span class="password-toggle" data-target="signupPassword">👁️</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label>Confirm Password</label>
-                <div class="input-container">
-                    <span class="input-icon">🔒</span>
-                    <input type="password" class="form-control" id="confirmPassword"
-                        placeholder="Confirm your password">
-                    <span class="password-toggle" data-target="confirmPassword">👁️</span>
+                
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-container">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm your password">
+                        <span class="password-toggle" data-target="confirmPassword">👁️</span>
+                    </div>
                 </div>
-            </div>
-
-            <button class="btn" id="signupBtn">
-                Create Secure Account
-                <span class="loading-spinner" id="signupSpinner"></span>
-            </button>
-
+                
+                <button type="submit" class="btn" id="signupBtn">
+                    Create Secure Account
+                </button>
+            </form>
+            
             <div class="form-footer">
                 Already have an account? <a href="#" class="switch-form" data-target="login">Login</a>
             </div>
         </div>
-
     </div>
 
-    <!-- Subscription Modal -->
-    <div class="modal-overlay" id="subscriptionModal">
-        <div class="modal-container">
-            <button class="modal-close" id="modalClose">×</button>
+    <script>
+        // Matrix code rain effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('matrixCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Character set for the matrix code
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+            const fontSize = 14;
+            const columns = Math.floor(canvas.width / fontSize);
+            
+            // Array to track the Y position of each column
+            const drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * -100); // Random starting positions above the canvas
+            }
+            
+            // Drawing the matrix rain
+            function drawMatrixRain() {
+                // Semi-transparent black background to create trail effect
+                ctx.fillStyle = 'rgba(10, 25, 41, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Set text color and font
+                ctx.fillStyle = '#39ff14';
+                ctx.font = `${fontSize}px monospace`;
+                
+                // Draw characters
+                for (let i = 0; i < drops.length; i++) {
+                    // Random character
+                    const char = characters[Math.floor(Math.random() * characters.length)];
+                    
+                    // Draw the character
+                    ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move the drop down
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    drops[i]++;
+                }
+            }
+            
+            // Animation loop
+            setInterval(drawMatrixRain, 50);
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
 
-            <div class="modal-header">
-                <h3 class="modal-title">Access Granted</h3>
-            </div>
-
-            <div class="modal-body">
-                <div class="subscription-animation"></div>
-                <p>You've successfully logged into Tech Sky Lab!</p>
-                <p>Enhance your cybersecurity skills by subscribing to our YouTube channel</p>
-
-                <div class="channel-logo">
-                    <span style="margin-right: 8px">▶️</span> Tech Sky - Ethical Hacking
-                </div>
-
-                <p>Get access to premium tutorials and cybersecurity insights</p>
-            </div>
-
-            <div class="modal-footer">
-                <button class="subscribe-btn" id="subscribeBtn">
-                    <span>SUBSCRIBE NOW</span>
-                    <span>🔔</span>
-                </button>
-                <button class="later-btn" id="laterBtn">Maybe Later</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- JavaScript includes -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="js/matrix.js"></script>
-    <script src="js/form-validation.js"></script>
-    <script src="js/modal.js"></script>
-    <script src="js/main.js"></script>
+        // Tab switching functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            const formContents = document.querySelectorAll('.form-content');
+            const switchFormLinks = document.querySelectorAll('.switch-form');
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    // Hide all form contents
+                    formContents.forEach(form => form.classList.remove('active'));
+                    
+                    // Show the corresponding form
+                    const formId = this.getAttribute('data-form') + 'Form';
+                    document.getElementById(formId).classList.add('active');
+                });
+            });
+            
+            // Switch form links
+            switchFormLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetForm = this.getAttribute('data-target');
+                    
+                    // Click the corresponding tab
+                    document.querySelector(`.tab[data-form="${targetForm}"]`).click();
+                });
+            });
+            
+            // Password toggle functionality
+            const passwordToggles = document.querySelectorAll('.password-toggle');
+            
+            passwordToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target');
+                    const passwordInput = document.getElementById(targetId);
+                    
+                    // Toggle between password and text type
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        this.textContent = '👁️‍🗨️'; // Eye with slash
+                    } else {
+                        passwordInput.type = 'password';
+                        this.textContent = '👁️'; // Eye
+                    }
+                });
+            });
+        });
+    </script>
 </body>
-
 </html>
