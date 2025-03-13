@@ -1,6 +1,0 @@
-git init
-git add .
-git commit -m "Initial commit of Tech Sky phishing demo"
-git branch -M main
-git remote add origin https://github.com/TechSky-EH/tech-sky-phishing-demo.git
-git push -u origin main
