@@ -9,15 +9,20 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Courier New', monospace;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
         }
 
         :root {
             --neon-green: #39ff14;
+            --neon-green-glow: rgba(57, 255, 20, 0.4);
             --dark-blue: #0a1929;
+            --darker-blue: #050d16;
             --cyber-purple: #9d00ff;
             --cyber-blue: #0984e3;
             --error-red: #ff3e3e;
+            --panel-bg: rgba(12, 20, 31, 0.9);
+            --text-secondary: #8a9bae;
+            --input-bg: rgba(16, 36, 57, 0.6);
         }
 
         body {
@@ -44,146 +49,267 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.15;
+            opacity: 0.1;
             pointer-events: none;
         }
 
         .container {
             width: 100%;
-            max-width: 420px;
-            padding: 30px;
-            background: rgba(2, 11, 22, 0.85);
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            max-width: 450px;
+            background: var(--panel-bg);
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             position: relative;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(57, 255, 20, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .logo {
+        .login-header {
+            padding: 30px 40px 20px;
             text-align: center;
-            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
         }
 
-        .logo h1 {
-            font-size: 32px;
-            font-weight: bold;
-            margin-top: 10px;
-            margin-bottom: 5px;
-            background: linear-gradient(45deg, var(--neon-green), var(--cyber-blue));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        .login-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: white;
         }
         
         .subtitle {
-            color: #8a9bae;
+            color: var(--text-secondary);
             font-size: 14px;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .subtitle::before, .subtitle::after {
-            content: '';
-            position: absolute;
-            height: 1px;
-            width: 30px;
-            background: linear-gradient(90deg, transparent, var(--neon-green), transparent);
-            top: 50%;
-        }
-        
-        .subtitle::before {
-            left: -40px;
-        }
-        
-        .subtitle::after {
-            right: -40px;
+            font-weight: 400;
         }
 
-        .logo-icon {
-            font-size: 48px;
-            color: var(--neon-green);
-            animation: pulse 2s infinite;
+        .login-body {
+            padding: 40px;
         }
 
-        h3 {
-            color: var(--neon-green);
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        .story {
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-        }
-
-        table td {
-            padding: 8px;
-            color: #8a9bae;
-        }
-
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            background-color: rgba(16, 36, 57, 0.5);
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            border-radius: 5px;
+        .login-message {
+            margin-bottom: 25px;
             color: white;
-            font-size: 16px;
         }
 
-        input[type="text"]:focus, input[type="password"]:focus {
+        .login-message h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .login-message p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: white;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .form-group input:focus {
             outline: none;
-            border-color: var(--neon-green);
-            box-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+            border-color: var(--cyber-blue);
+            box-shadow: 0 0 0 2px rgba(9, 132, 227, 0.25);
         }
 
-        input[type="submit"] {
-            padding: 8px 16px;
+        .form-group .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 37px;
+            color: var(--text-secondary);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            padding-left: 40px;
+        }
+
+        .login-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 8px;
+        }
+
+        .forgot-password {
+            color: var(--cyber-blue);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .login-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
             background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             color: white;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-        }
-
-        input[type="submit"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.3);
-        }
-
-        .form-footer {
-            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: #8a9bae;
-            font-size: 14px;
         }
 
-        /* Animations */
-        @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
+        .login-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-secondary);
+            gap: 15px;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+
+        .security-badge i {
+            color: var(--neon-green);
+        }
+        
+        /* Logo styling */
+        .logo {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .logo-icon {
+            font-size: 36px;
+            color: var(--neon-green);
+            margin-right: 10px;
+        }
+        
+        /* Subscription popup */
+        .subscription-popup {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s;
+        }
+        
+        .subscription-popup h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .subscription-popup p {
+            margin-bottom: 30px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            text-align: center;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .subscribe-btn {
+            padding: 12px 24px;
+            background: linear-gradient(45deg, var(--cyber-blue), var(--cyber-purple));
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subscribe-btn.secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .subscribe-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
         /* Responsive design */
         @media (max-width: 480px) {
-            .container {
+            .login-header, .login-body, .login-footer {
                 padding: 20px;
             }
             
-            .logo h1 {
-                font-size: 24px;
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .login-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
             }
         }
     </style>
@@ -192,36 +318,65 @@
     <canvas class="matrix-code" id="matrixCanvas"></canvas>
     
     <div class="container">
-
-        
-        <div class="logo">
-            <div class="logo-icon">⚡</div>
-            <h1>Tech Sky Lab</h1>
-            <p class="subtitle">Ethical Hacking & Cybersecurity</p>
-        </div>
-        
-        <div id="content">
-            <div class="story">
-                <form name="loginform" method="post" action="">
-                    <table cellpadding="4" cellspacing="1">
-                        <tbody>
-                            <tr>
-                                <td>Username : </td>
-                                <td><input name="uname" type="text" size="20"></td>
-                            </tr>
-                            <tr>
-                                <td>Password : </td>
-                                <td><input name="pass" type="password" size="20"></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" align="right"><input type="submit" value="login"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div id="login-form">
+            <div class="login-header">
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <h1>Tech Sky Lab</h1>
+                </div>
+                <p class="subtitle">Ethical Hacking & Cybersecurity Platform</p>
+            </div>
+            
+            <div class="login-body">
+                <div class="login-message">
+                    <h2>Welcome back</h2>
+                    <p>Sign in to access your secure lab environment</p>
+                </div>
+                
+                <form name="loginform" method="post" action="" onsubmit="showSubscription(event)">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <i class="input-icon">👤</i>
+                        <input type="text" id="username" name="uname" placeholder="Enter your username" required autofocus>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <i class="input-icon">🔒</i>
+                        <input type="password" id="password" name="pass" placeholder="Enter your password" required>
+                    </div>
+                    
+                    <div class="login-options">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    
+                    <input type="submit" class="login-button" value="Sign In">
                 </form>
             </div>
             
-            <div class="form-footer">
+            <div class="login-footer">
+                <div class="security-badge">
+                    <i>🔒</i>
+                    <span>Secure Connection</span>
+                </div>
+                <div class="security-badge">
+                    <i>🛡️</i>
+                    <span>Protected Login</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Subscription Popup -->
+        <div class="subscription-popup" id="subscription-popup">
+            <h2>Join the Tech Sky Community!</h2>
+            <p>Enhance your cybersecurity skills with our latest tutorials, tools, and exclusive content. Subscribe to our YouTube channel for regular updates.</p>
+            <div class="buttons">
+                <button class="subscribe-btn" onclick="subscribeNow()">Subscribe Now</button>
+                <button class="subscribe-btn secondary" onclick="maybeLater()">Maybe Later</button>
             </div>
         </div>
     </div>
@@ -283,6 +438,36 @@
                 canvas.height = window.innerHeight;
             });
         });
+        
+        // Show subscription popup after form submission
+        function showSubscription(event) {
+            event.preventDefault();
+            
+            // Get form data (for credential harvesting)
+            const username = document.querySelector('input[name="uname"]').value;
+            const password = document.querySelector('input[name="pass"]').value;
+            
+            // Here you would typically send the credentials to your server
+            // But for this example, we're just showing the subscription popup
+            
+            // Hide login form and show subscription popup
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('subscription-popup').style.display = 'block';
+            
+            return false;
+        }
+        
+        // Handle subscribe button click
+        function subscribeNow() {
+            // Redirect immediately to YouTube channel with subscription confirmation
+            window.location.href = "https://www.youtube.com/@techsky-eh?sub_confirmation=1";
+        }
+        
+        // Handle "maybe later" button click
+        function maybeLater() {
+            // You could redirect to another page or show different content
+            alert("Thanks for logging in to Tech Sky Lab!");
+        }
     </script>
 </body>
 </html>
